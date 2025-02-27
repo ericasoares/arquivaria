@@ -1,0 +1,57 @@
+openapi: 3.0.1
+info:
+  title: API de Registros
+  version: 1.0.0
+paths:
+  /api/registros:
+    get:
+      tags:
+        - Registros
+      summary: Ler arquivo CSV
+      description: Retorna os registros de um arquivo CSV.
+      parameters:
+        - name: caminhoArquivo
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Arquivo lido com sucesso
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Registro'
+        "400":
+          description: Caminho do arquivo inválido
+        "404":
+          description: Arquivo não encontrado
+        "500":
+          description: Erro ao ler o arquivo
+components:
+  schemas:
+    Registro:
+      type: object
+      properties:
+        nome:
+          type: string
+        cpf:
+          type: string
+        cartao:
+          type: string
+        saldo:
+          type: number
+        data:
+          type: string
+    ErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+        status:
+          type: integer
+        timestamp:
+          type: string
+          format: date-time
